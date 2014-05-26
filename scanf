@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int main() {
+  
+  // Variable n stores the inputted integer from standard input
+  int n = 0;
+
+  // Macro EOF is a safe way to test end of file
+  int return_value = EOF;
+ 
+  printf("Macro EOF is mapped to integer %d.\n", EOF);
+  while (1 != return_value) {
+    printf("Input a digit:");
+    return_value = scanf("%d", &n);
+    
+    // scanf("%d", &n); returns
+    //   .  0 on getting non-digit input
+    //   .  1 on getting digit input
+    if (0 == return_value) {
+      printf("Your input is illegal. Retry again.\n");
+      printf("Returned value of scanf(\"\%d\", &n); is %d, and n is %d.\n", return_value, n); 
+    } else if (1 == return_value) {
+      printf("Returned value of scanf(\"\%d\", &n); is %d, and n is %d.\n", return_value, n); 
+    }   
+
+    // Consume the buffer modified by scanf()
+    while ('\n' != getchar()) {
+    }   
+  }
+  
+  printf("Your input is %d.\n", n); 
+  printf("Terminating...\n");
+  
+  return 0;
+}

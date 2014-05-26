@@ -1,35 +1,57 @@
 #include <stdio.h>
 
 int main() {
-  
-  // Variable n stores the inputted integer from standard input
+
+  // Variable n stores the input integer from standard input
   int n = 0;
+
+  // Variable c stores potential character following the input integer used for
+  // validation
+  char c = '\0';
 
   // Macro EOF is a safe way to test end of file
   int return_value = EOF;
- 
-  printf("Macro EOF is mapped to integer %d.\n", EOF);
-  while (1 != return_value) {
-    printf("Input a digit:");
-    return_value = scanf("%d", &n);
-    
-    // scanf("%d", &n); returns
-    //   .  0 on getting non-digit input
-    //   .  1 on getting digit input
-    if (0 == return_value) {
-      printf("Your input is illegal. Retry again.\n");
-      printf("Returned value of scanf(\"\%d\", &n); is %d, and n is %d.\n", return_value, n); 
-    } else if (1 == return_value) {
-      printf("Returned value of scanf(\"\%d\", &n); is %d, and n is %d.\n", return_value, n); 
-    }   
 
-    // Consume the buffer modified by scanf()
-    while ('\n' != getchar()) {
-    }   
+  printf("This program can test if your input integer is valid.\n");
+  while ('\n' != c) {
+    printf("Try input an integer: ");
+    return_value = scanf("%d%c", &n, &c);
+
+    // scanf("%d%c", &n, &c); returns
+    //   .  0 on getting no integer input nor character input
+    //   .  1 on getting an integer input
+    //   .  2 on getting an integer and a character input
+    if (0 == return_value) {
+      printf("I'm afraid that your input is not valid :-(\n");
+      printf("You can try again~\n");
+
+      // Consume the standard input buffer modified by scanf()
+      printf("Now we're gonna clean up the stdin buffer...\n");
+      while ('\n' != getchar()) {
+      }
+      printf("Alright, now the stdin buffer has been cleaned up...\n\n");
+
+    } else if (1 == return_value) {
+      // Return value would never be 1 though
+
+    } else if (2 == return_value) {
+      if ('\n' != c) { // c is not new line character
+        printf("I'm afraid that your input is not valid :-(\n");
+        printf("You can try again~\n");
+
+        // Consume the standard input buffer modified by scanf()
+        printf("Now we're gonna clean up the stdin buffer...\n");
+        while ('\n' != getchar()) {
+        }
+        printf("Alright, now the stdin buffer has been cleaned up...\n\n");
+      } else { // c is new line character
+      }
+    }
   }
-  
-  printf("Your input is %d.\n", n); 
-  printf("Terminating...\n");
-  
+
+  printf("Roger that, your input integer is valid and its value is %d.\n", n);
+  printf("Now we're gonna terminating the program...\n");
+  printf("Goodbye! :-)\n");
+
   return 0;
 }
